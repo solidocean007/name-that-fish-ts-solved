@@ -1,37 +1,49 @@
 import { FunctionalGameBoard } from "./FunctionalGameBoard";
 import { FunctionalScoreBoard } from "./FunctionalScoreBoard";
 import { FunctionalFinalScore } from "./FunctionalFinalScore";
-import { Fish } from "../../App";
+import { Fish, TCount } from "../../types";
 import { useState } from "react";
 
-export interface TCount {
-  correctCount: number;
-  wrongCount: number;
-}
-
 export function FunctionalApp({ initialFishes }: { initialFishes: Fish[] }) {
-  const [count, setCount] = useState<TCount>({
+  const [fish, setFish] = useState(initialFishes);
+  const [score, setScore] = useState<TCount>({
     correctCount: 0,
-    wrongCount: 0,
+    incorrectCount: 0,
   });
 
-  const updateCount = (isCorrect: boolean) => {
-    setCount((prevCount) => ({
-      correctCount: prevCount.correctCount + (isCorrect ? 1 : 0),
-      wrongCount: prevCount.wrongCount + (isCorrect ? 0 : 1),
-    }));
-    console.log(updateCount);  // log the updated state
-        return updateCount;
+  // create function that removes the fish object.
+  const removeFish = (usedName: string) => {
+    const newFishList = fish.filter((fish) => fish.name !== usedName);
+    setFish(newFishList);
+  };
+
+  const gameEnd = fish.length === 0;
+
+  const handleScore = (userGuess: string, fishName:string) => {
+    // This is called on the users input form on FunctionalGameBoard.
+    const isCorrect =
+      fishName.toLocaleLowerCase() === userGuess.toLocaleLowerCase();
+    if (isCorrect) {
+      setScore((prevScore) => ({
+        ...prevScore,
+        correctCount: prevScore.correctCount + 1,
+      }));
+    } else {
+      setScore((prevScore) => ({
+        ...prevScore,
+        incorrectCount: prevScore.incorrectCount + 1,
+      }));
+    }
+    removeFish(fishName);
   };
 
   return (
     <>
-      <FunctionalScoreBoard count={count} />
-      <FunctionalGameBoard
-        initialFishes={initialFishes}
-        updateCount={updateCount}
-      />
-      {false && <FunctionalFinalScore />}
+      {!gameEnd && <FunctionalScoreBoard fish={fish} score={score} />}
+      {!gameEnd && (
+        <FunctionalGameBoard fish={fish} handleScore={handleScore} />
+      )}
+      {gameEnd && <FunctionalFinalScore score={score} />}
     </>
   );
 }
