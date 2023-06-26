@@ -1,10 +1,10 @@
 import { FunctionalGameBoard } from "./FunctionalGameBoard";
 import { FunctionalScoreBoard } from "./FunctionalScoreBoard";
 import { FunctionalFinalScore } from "./FunctionalFinalScore";
-import { Fish, TCount } from "../../types";
+import { TFish, TCount } from "../../types";
 import { useState } from "react";
 
-export function FunctionalApp({ initialFishes }: { initialFishes: Fish[] }) {
+export function FunctionalApp({ initialFishes }: { initialFishes: TFish[] }) {
   const [fish, setFish] = useState(initialFishes);
   const [score, setScore] = useState<TCount>({
     correctCount: 0,

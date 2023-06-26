@@ -2,10 +2,10 @@ import "./App.css";
 import { ClassApp } from "./Components/Class/ClassApp";
 import { FunctionalApp } from "./Components/Functional/FunctionalApp";
 import { Images } from "./assets/Images";
-import { Fish } from "./type";
+import { TFish } from "./types";
 
 
-const initialFishes: Fish[] = [
+const initialFishes: TFish[] = [
   {
     name: "trout",
     url: Images.trout,

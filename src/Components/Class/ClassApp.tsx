@@ -1,29 +1,69 @@
 import { Component } from "react";
-import { Fish, FishProps } from "../../App";
 import { ClassScoreBoard } from "./ClassScoreBoard";
 import { ClassGameBoard } from "./ClassGameBoard";
 import { ClassFinalScore } from "./ClassFinalScore";
+import { TFish } from "../../types";
 
-interface State {
-  incorrectCount: number;
-  correctCount: number;
+type ClassAppProps = {
+  initialFishes: TFish[];
 }
 
-export class ClassApp extends Component<{ initialFishes: Fish[] }> {
+type ClassAppState = {
+  score: {
+    incorrectCount: number,
+    correctCount: number,
+  },
+  fish: TFish[],
+}
+
+export class ClassApp extends Component<ClassAppProps, ClassAppState> {
   state = {
-    incorrectCount: 0,
-    correctCount: 0,
+    score: {
+      incorrectCount: 0,
+      correctCount: 0,
+    },
+    fish: this.props.initialFishes,
+  };
+
+  removeFish = (usedName: string) => {
+    this.setState((prevState) => ({
+      fish: prevState.fish.filter((fish) => fish.name !== usedName),
+    }));
+  };
+
+  handleScore = (userGuess: string, fishName: string) => {
+    const isCorrect =
+      fishName.toLocaleLowerCase() === userGuess.toLocaleLowerCase();
+    if (isCorrect) {
+      this.setState((prevState) => ({
+        score: {
+          ...prevState.score,
+          correctCount: prevState.score.correctCount + 1,
+        },
+      }));
+    } else {
+      this.setState((prevState) => ({
+        score: {
+          ...prevState.score,
+          incorrectCount: prevState.score.incorrectCount + 1,
+        },
+      }));
+    }
+    this.removeFish(fishName);
   };
 
   render() {
-    const { initialFishes } = this.props;
+    const { score, fish } = this.state;
+    const gameEnd = fish.length === 0;
     return (
       <>
         <>
-          <ClassScoreBoard />
-          <ClassGameBoard initialFishes={initialFishes}/>
+          {!gameEnd && <ClassScoreBoard score={score} fish={fish} />}
+          {!gameEnd && (
+            <ClassGameBoard fish={fish} handleScore={this.handleScore} />
+          )}
         </>
-        {false && <ClassFinalScore />}
+        {gameEnd && <ClassFinalScore score={score} />}
       </>
     );
   }

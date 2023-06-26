@@ -1,18 +1,23 @@
 import { Component } from "react";
 import "./styles/score-board.css";
+import { TCount, TFish } from "../../types";
 
-const incorrectCount = 0;
-const correctCount = 0;
-const answersLeft = ["trout", "salmon", "tuna", "shark"];
-export class ClassScoreBoard extends Component {
+type ClassScoreBoardProps = {
+  score: TCount;
+  fish: TFish[];
+}
+
+export class ClassScoreBoard extends Component<ClassScoreBoardProps> {
   render() {
+    const { incorrectCount, correctCount } = this.props.score;
+    const fish = this.props.fish;
     return (
       <div id="score-board">
         <div>Incorrect 🔻: {incorrectCount}</div>
         <div id="choices-left">
-          {answersLeft.map((answer) => (
-            <div key={answer} className="choice">
-              {answer}
+          {fish.map((fish) => (
+            <div key={fish.name} className="choice">
+              {fish.name}
             </div>
           ))}
         </div>
@@ -21,3 +26,4 @@ export class ClassScoreBoard extends Component {
     );
   }
 }
+

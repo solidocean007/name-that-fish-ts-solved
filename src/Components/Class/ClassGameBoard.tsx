@@ -1,60 +1,53 @@
 import { Component } from "react";
-import { Fish } from "../../App";
 import "./styles/game-board.css";
+import { TFish } from "../../types";
 
-interface Props {
-  initialFishes: Fish[];
-}
+type ClassGameBoardProps = {
+  fish: TFish[];
+  handleScore: (userGuess: string, fishName: string) => void;
+};
 
-interface State {
-  userGuessInput: string;
-}
-
-/* Create a function that will check if users input matches the fishes name currently
-  rendered on screen.
-*/
-
-export class ClassGameBoard extends Component<Props, State> {
-  state = {
-    userGuessInput: "",
-  };
-
-  checkUserGuess = (input: string) => {
-    const nextFishToName = this.props.initialFishes[0];
-    const correctGuess = nextFishToName.name === input;
-    if (correctGuess) {
-      // increment correct score and render next fish 
-    } else {
-      // increment incorrect score clear input
-    }
-  }
+export class ClassGameBoard extends Component<ClassGameBoardProps> {
+  state = { userInput: "" };
   render() {
-    const { userGuessInput } = this.state;
-    const nextFishToName = this.props.initialFishes[0];
+    const { fish } = this.props;
+    const { handleScore } = this.props;
+
+    let nextFishToName: TFish | null = null;
+
+    if (fish && fish.length > 0) {
+      nextFishToName = fish[0];
+    }
     return (
       <div id="game-board">
-        <div id="fish-container">
-          <img src={nextFishToName.url} alt={nextFishToName.name} />
-        </div>
-        <form
-          id="fish-guess-form"
-          onSubmit={(e) => {
-            e.preventDefault();
-            this.checkUserGuess(userGuessInput);
-            this.setState({ userGuessInput: "" });
-          }}
-        >
-          <label htmlFor="fish-guess">What kind of fish is this?</label>
-          <input
-            type="text"
-            name="fish-guess"
-            value={userGuessInput}
-            onChange={(e) => {
-              this.setState({ userGuessInput: e.target.value });
-            }}
-          />
-          <input type="submit" />
-        </form>
+        {nextFishToName && (
+          <>
+            <div id="fish-container">
+              <img src={nextFishToName.url} alt={nextFishToName.name} />
+            </div>
+            <form
+              id="fish-guess-form"
+              onSubmit={(e) => {
+                if (nextFishToName) {
+                  e.preventDefault();
+                  this.setState({ userInput: "" });
+                  handleScore(this.state.userInput, nextFishToName.name);
+                }
+              }}
+            >
+              <label htmlFor="fish-guess">What kind of fish is this?</label>
+              <input
+                type="text"
+                name="fish-guess"
+                onChange={(e) => {
+                  this.setState({ userInput: e.target.value });
+                }}
+                value={this.state.userInput}
+              />
+              <input type="submit" />
+            </form>
+          </>
+        )}
       </div>
     );
   }

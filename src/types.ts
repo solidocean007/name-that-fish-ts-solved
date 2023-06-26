@@ -1,4 +1,4 @@
-export type Fish = {
+export type TFish = {
   name: string;
   url: string;
 };
@@ -9,6 +9,6 @@ export type TCount = {
 }
 
 export type FishProps = {
-  initialFishes : Fish[];
+  initialFishes : TFish[];
 }
 

@@ -1,9 +1,9 @@
 import "./styles/game-board.css";
 import { useState } from "react";
-import { Fish } from "../../types";
+import { TFish } from "../../types";
 
 type FunctionalGameBoardProps = {
-  fish: Fish[];
+  fish: TFish[];
   handleScore: (userGuess: string, fishName: string) => void;
 };
 
@@ -12,7 +12,7 @@ export function FunctionalGameBoard({
   handleScore,
 }: FunctionalGameBoardProps) {
   const [userInput, setUserInput] = useState("");
-  let nextFishToName: Fish | null = null;
+  let nextFishToName: TFish | null = null;
 
   if (fish && fish.length > 0) {
     nextFishToName = fish[0];
