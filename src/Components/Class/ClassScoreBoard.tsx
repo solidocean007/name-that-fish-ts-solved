@@ -5,7 +5,7 @@ import { TCount, TFish } from "../../types";
 type ClassScoreBoardProps = {
   score: TCount;
   fish: TFish[];
-}
+};
 
 export class ClassScoreBoard extends Component<ClassScoreBoardProps> {
   render() {
@@ -26,4 +26,3 @@ export class ClassScoreBoard extends Component<ClassScoreBoardProps> {
     );
   }
 }
-

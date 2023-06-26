@@ -19,7 +19,7 @@ export function FunctionalApp({ initialFishes }: { initialFishes: TFish[] }) {
 
   const gameEnd = fish.length === 0;
 
-  const handleScore = (userGuess: string, fishName:string) => {
+  const handleScore = (userGuess: string, fishName: string) => {
     // This is called on the users input form on FunctionalGameBoard.
     const isCorrect =
       fishName.toLocaleLowerCase() === userGuess.toLocaleLowerCase();

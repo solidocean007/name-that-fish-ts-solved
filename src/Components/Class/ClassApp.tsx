@@ -6,15 +6,15 @@ import { TFish } from "../../types";
 
 type ClassAppProps = {
   initialFishes: TFish[];
-}
+};
 
 type ClassAppState = {
   score: {
-    incorrectCount: number,
-    correctCount: number,
-  },
-  fish: TFish[],
-}
+    incorrectCount: number;
+    correctCount: number;
+  };
+  fish: TFish[];
+};
 
 export class ClassApp extends Component<ClassAppProps, ClassAppState> {
   state = {

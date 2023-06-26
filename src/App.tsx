@@ -4,7 +4,6 @@ import { FunctionalApp } from "./Components/Functional/FunctionalApp";
 import { Images } from "./assets/Images";
 import { TFish } from "./types";
 
-
 const initialFishes: TFish[] = [
   {
     name: "trout",
@@ -24,8 +23,6 @@ const initialFishes: TFish[] = [
   },
 ];
 
-
-
 function App() {
   return (
     <div className="App">
@@ -37,7 +34,7 @@ function App() {
         </div>
         <div className="right">
           <h3>Class</h3>
-          <ClassApp initialFishes={initialFishes}/>
+          <ClassApp initialFishes={initialFishes} />
         </div>
       </div>
     </div>

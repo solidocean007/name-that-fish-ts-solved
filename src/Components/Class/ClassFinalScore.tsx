@@ -3,7 +3,7 @@ import { TCount } from "../../types";
 
 type ClassFinalScoreProps = {
   score: TCount;
-}
+};
 
 export class ClassFinalScore extends Component<ClassFinalScoreProps> {
   render() {
@@ -21,4 +21,3 @@ export class ClassFinalScore extends Component<ClassFinalScoreProps> {
     );
   }
 }
-

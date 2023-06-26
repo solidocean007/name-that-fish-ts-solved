@@ -6,9 +6,8 @@ export type TFish = {
 export type TCount = {
   correctCount: number;
   incorrectCount: number;
-}
+};
 
 export type FishProps = {
-  initialFishes : TFish[];
-}
-
+  initialFishes: TFish[];
+};
